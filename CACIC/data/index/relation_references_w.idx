@@ -1,0 +1,4 @@
+http:localhost:8080_congreso_api
+http:localhost:8080_congreso_api_trabajos_33_autores
+http:localhost:8080_congreso_api_trabajos_33_temas
+http:localhost:8080_congreso_api_trabajos_33_evaluaciones

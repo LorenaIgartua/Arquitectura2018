@@ -1,0 +1,201 @@
+
+<h1 class="sectionedit1" id="arquitecturas_web_-_tudai_2018">ARQUITECTURAS WEB - TUDAI 2018</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;ARQUITECTURAS WEB - TUDAI 2018&quot;,&quot;hid&quot;:&quot;arquitecturas_web_-_tudai_2018&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:1,&quot;range&quot;:&quot;2-46&quot;} -->
+<h1 class="sectionedit2" id="trabajo_practico_especial">TRABAJO PRACTICO ESPECIAL</h1>
+<div class="level1">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;TRABAJO PRACTICO ESPECIAL&quot;,&quot;hid&quot;:&quot;trabajo_practico_especial&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:2,&quot;range&quot;:&quot;47-87&quot;} -->
+<h2 class="sectionedit3" id="introduccion">Introduccion</h2>
+<div class="level2">
+
+<p>
+Conforme lo requerido, debiamos desarrollar un sistema que ayude a asignar evaluadores a los trabajos enviados a un congreso. Estas asignaciones tenian limitaciones, tales como que el evaluador designado debia haber declarado
+conocimiento en todos los temas del trabajo, especificados en sus palabras claves. Para el caso de los posters, bastaba que el evaluador tenga conocimiento en uno de los temas del poster, o sea, en una de las palabras clave. A su vez, se debe controlar que el evaluador designado no coincida con alguno de los autores del trabajo, o alguno de sus compañeros de trabajo.
+Se debia definir e implementar las clases que modelen el sistema y su persistencia. Con eso en funcionamiento, debiamos exponer los servicios implementados mediante una interfaz REST.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Introduccion&quot;,&quot;hid&quot;:&quot;introduccion&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:3,&quot;range&quot;:&quot;88-895&quot;} -->
+<h2 class="sectionedit4" id="desarrollo">Desarrollo</h2>
+<div class="level2">
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Desarrollo&quot;,&quot;hid&quot;:&quot;desarrollo&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:4,&quot;range&quot;:&quot;896-919&quot;} -->
+<h3 class="sectionedit5" id="tecnologias_y_patrones_usados">Tecnologias y Patrones usados</h3>
+<div class="level3">
+
+<p>
+Como punto de partida, definimos las entidades que ibamos a necesitar, y sus atributos. Determinadas las entidades, se aplico el esquema ORM para su persistencia, utilizando como proveedor JPA a Hivernete. La Base de Datos que utilizamos es MySQL.  A su vez, y considerando el uso del patron de diseño DAO para aislar la aplicación de la tecnología de persistencia Java subyacente  (Hivernete).
+El esquema  de la aplicacion es este:
+</p>
+
+<p>
+<a href="/proyectos/CACIC/lib/exe/detail.php?id=start&amp;media=arquit1.png" class="media" title="arquit1.png"><img src="/proyectos/CACIC/lib/exe/fetch.php?w=600&amp;tok=517c83&amp;media=arquit1.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+A este esquema, y conforme se requirio para la segunda etapa del proyecto, debiamos  agregar nuevas tecnologias, para convertir la aplicacion a un servicio web, indicando a Apache Tomcat como nuestro ServletContainer, y agregamos  una interfaz REST que satisfaga los servicios implementados, usando Jersey. 
+El esquema  de la aplicacion es este:
+</p>
+
+<p>
+<a href="/proyectos/CACIC/lib/exe/detail.php?id=start&amp;media=arquit2.png" class="media" title="arquit2.png"><img src="/proyectos/CACIC/lib/exe/fetch.php?w=600&amp;tok=b40f49&amp;media=arquit2.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+<p>
+Esto implico desarrollar mas clases y mas servicios, denominados RESTController, uno para cada entidad definida.
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Tecnologias y Patrones usados&quot;,&quot;hid&quot;:&quot;tecnologias_y_patrones_usados&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:5,&quot;range&quot;:&quot;920-1909&quot;} -->
+<h3 class="sectionedit6" id="aplicacion">Aplicacion</h3>
+<div class="level3">
+
+<p>
+Con todo esto, el diagrama de Entidad-Relacion obtenido es el siguiente:
+</p>
+
+<p>
+<a href="/proyectos/CACIC/lib/exe/detail.php?id=start&amp;media=congreso-2018-11-15_17_20.png" class="media" title="congreso-2018-11-15_17_20.png"><img src="/proyectos/CACIC/lib/exe/fetch.php?media=congreso-2018-11-15_17_20.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Y el diagrama de clases , el siguiente:
+</p>
+
+<p>
+Como se observa del diagrama, se implementaron  5 entidades:
+</p>
+<ul>
+<li class="level1"><div class="li"> Empresa, para referirse al lugar de trabajo del futuro autor/evaluador. Esta entidad se definio como tal, porque una de las condiciones de asignacion de evaluaciones, era que el denominado evaluador no trabajara junto con alguno de los autores del trabajo.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Tema, para referirse a las palabras claves o topicos de cada trabajo presentado en el congreso, y, tambien,  a los conocimientos que se adjudica cada usuario del sistema. Estos temas pueden ser generales o especificos.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Usuario, para referirse a las personas que participan del congreso, ya sea en su rol de autor de un trabajo, o de evaluador de alguno de los trabajos presentados. Esta entidad tiene relacion de tipo ManyToMany tanto con la entidad Tema como con la entidad Trabajo, generando esto las tablas usuario-tema y trabajo-usuario en nuestra Base de Datos (en la relacion con trabajo, el dueño es la entidad Trabajo, y Usuario la mapea con el atributo autores).</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Trabajo, para referirse a los articulos, posters o resumenes presentados en el congreso.  Esta entidad tiene relacion de tipo ManyToMany tanto con la entidad Tema como con la entidad Trabajo, generando esto las tablas trabajo-tema y trabajo-usuario en nuestra Base de Datos.</div>
+</li>
+</ul>
+<ul>
+<li class="level1 node"><div class="li">  Evaluacion, para indicar el nuevo objeto que se genera al designar a un usuario como evaluador de un trabajo. Para que esto ocurra, el usuario debe cumplir determinadas condiciones, a saber: </div>
+<ol>
+<li class="level6"><div class="li"> que no trabaje en la misma empresa que alguno de los autores del trabajo.</div>
+</li>
+<li class="level6"><div class="li"> que conozca uno de los temas a que se refiere el trabajo a asignar, en cado que un trabajo de tipo  Poster.</div>
+</li>
+<li class="level6"><div class="li">  que conozca todos los temas a que se refiere el trabajo a asignar, en cado que un trabajo de tipo  No Poster.</div>
+</li>
+<li class="level6"><div class="li"> que no tenga mas de  3 evaluaciones asignadas.</div>
+</li>
+</ol>
+</li>
+</ul>
+
+<p>
+A su vez, cada trabajo puede tener, como maximo, 3 evaluadores designados.
+</p>
+
+<p>
+Definidas las entidades, con sus tags para mapear a la Base de Datos, y sus metodos get y set, se procedio a implementar los servicios que permitan persistir, leer (todos, o uno en particular), borrar y actualizar los objetos.
+Para esto, se utilizo la interfaz DAO, que definia esos metodos, y se creo un Servicio para cada entidad previamente definida. A los metodos de la interfaz, se agregaron otros que requeria la aplicacion, en orden de satisfacer servicios puntuales.
+</p>
+
+<p>
+Por ultimo, se implementaron los RESTControllers, definiendo las <abbr title="Uniform Resource Locator">URL</abbr>  de nuestra aplicacion, y los metodos a invocar por cada 
+ metodo HTTP. Se definieron los metodos basicos (create, getAll, getById, delete y update), y otros definidos para satisfacer servicios puntuales.
+</p>
+
+<p>
+La <abbr title="Uniform Resource Locator">URL</abbr> base es la siguiente:
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api" class="urlextern" title="http://localhost:8080/CONGRESO/api" rel="nofollow">http://localhost:8080/CONGRESO/api</a>
+</p>
+
+<p>
+desde alli,  podemos consultar a cada entidad, con su Path. Para la entidad Tema, el path es <strong>temas</strong>, para Empresa, <strong>empresas</strong>, para Usuario, <strong>usuarios</strong>, para Trabajo, <strong>trabajos</strong> y para Evaluacion, <strong>evaluaciones</strong>.
+Desde esa <abbr title="Uniform Resource Locator">URL</abbr>, segun el metodo HTTP que usemos, sera la informacion que obtendremos.
+</p>
+
+<p>
+Tambien se implemento la posibilidad de, ingresado un id particular de un trabajo, por ejemplo, podemos averiguar sus autores, sus palabrasClaves, las evaluaciones asignadas y una lista de evaluadores en condiciones de evaluar ese trabajo. Las <abbr title="Uniform Resource Locator">URL</abbr>, si consultamos particularmente por el id 33, serian:
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api/trabajos/33/autores" class="urlextern" title="http://localhost:8080/CONGRESO/api/trabajos/33/autores" rel="nofollow">http://localhost:8080/CONGRESO/api/trabajos/33/autores</a>
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api/trabajos/33/temas" class="urlextern" title="http://localhost:8080/CONGRESO/api/trabajos/33/temas" rel="nofollow">http://localhost:8080/CONGRESO/api/trabajos/33/temas</a>
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api/trabajos/33/evaluaciones" class="urlextern" title="http://localhost:8080/CONGRESO/api/trabajos/33/evaluaciones" rel="nofollow">http://localhost:8080/CONGRESO/api/trabajos/33/evaluaciones</a>
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api/trabajos/33/evaluadoresParaAsignar" class="urlextern" title="http://localhost:8080/CONGRESO/api/trabajos/33/evaluadoresParaAsignar" rel="nofollow">http://localhost:8080/CONGRESO/api/trabajos/33/evaluadoresParaAsignar</a>
+</p>
+
+<p>
+Mismo recurso para un usuario. Las <abbr title="Uniform Resource Locator">URL</abbr> para consultar conocimientos, trabajos propios , evaluaciones asignadas al usuario y lista de trabajos que pueden ser evaluados por un usuario particular, por ejemplo, 23, serian:
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api/usuarios/23/temas" class="urlextern" title="http://localhost:8080/CONGRESO/api/usuarios/23/temas" rel="nofollow">http://localhost:8080/CONGRESO/api/usuarios/23/temas</a>
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api/usuarios/23/trabajos" class="urlextern" title="http://localhost:8080/CONGRESO/api/usuarios/23/trabajos" rel="nofollow">http://localhost:8080/CONGRESO/api/usuarios/23/trabajos</a>
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api/usuarios/23/evaluaciones" class="urlextern" title="http://localhost:8080/CONGRESO/api/usuarios/23/evaluaciones" rel="nofollow">http://localhost:8080/CONGRESO/api/usuarios/23/evaluaciones</a>
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api/usuarios/23/trabajosParaAsignar" class="urlextern" title="http://localhost:8080/CONGRESO/api/usuarios/23/trabajosParaAsignar" rel="nofollow">http://localhost:8080/CONGRESO/api/usuarios/23/trabajosParaAsignar</a>
+</p>
+
+<p>
+Para asignar la revision de un trabajo a un determinado evaluador, y dadas las restricciones que se indicaron anteriormente, se diseño la asignacion a traves del metodo EvaluacionesDAO.getInstance().asignarEvaluador(trabajo). En este metodo, se consulta que usuario esta en condicion de evaluar ese trabajo en particular, e identificado el mismo, se crea y persiste la asignacion.
+Para realizarlo a traves de la <abbr title="Application Programming Interface">API</abbr>, y asignar un evaluador por ejemplo al trabajo  con id 33, la <abbr title="Uniform Resource Locator">URL</abbr> seria:
+</p>
+
+<p>
+<a href="http://localhost:8080/CONGRESO/api/evaluaciones/asignarEvaluador/33" class="urlextern" title="http://localhost:8080/CONGRESO/api/evaluaciones/asignarEvaluador/33" rel="nofollow">http://localhost:8080/CONGRESO/api/evaluaciones/asignarEvaluador/33</a>
+</p>
+
+<p>
+Como se observa del diagrama de clases, se distinguen 3 capas en la aplicacion, la primera, de DAOs, que permiten persistir  nuestras entidades POJO en la Base de Datos,  la segunda de RESTControllers, que reciben los request del cliente, interpreta la ruta y conecta con aplicacion (y esta a la Base de Datos), y la tercera etapa es donde se generan los request, y en este caso, realizazo a trabes de test de JUnit. En un diagrama de componentes, esto se veria de esta manera:
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Aplicacion&quot;,&quot;hid&quot;:&quot;aplicacion&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:6,&quot;range&quot;:&quot;1910-7266&quot;} -->
+<h3 class="sectionedit7" id="microservicio">Microservicio</h3>
+<div class="level3">
+
+<p>
+Se solicita implementar en Java con SpringBoot un microservicio que permita retornar todas los trabajos enviados por un autor determinado.
+Para esto, se creo el proyecto en SprinBoot. Cuando este estuvo  en funcionamiento, y conectado al Tomcat, se procedio a incorporar las clases para satisfacer al servicio solicitado.
+Se agregaron las entidades, se genero el repositorio que conecta con la Base de Datos, se implemento el servicio para usar ese repositorio, y, finalmente, el controler REST, que determinaba la <abbr title="Uniform Resource Locator">URL</abbr> para invocar el servicio.
+De esta manera, si queremos conocer los trabajos enviador por el usurio con id 23, la <abbr title="Uniform Resource Locator">URL</abbr> es la siguiente:
+</p>
+
+<p>
+<a href="http://localhost:8080/usuarios/23/trabajos" class="urlextern" title="http://localhost:8080/usuarios/23/trabajos" rel="nofollow">http://localhost:8080/usuarios/23/trabajos</a>
+</p>
+
+</div>
+<!-- EDIT{&quot;target&quot;:&quot;section&quot;,&quot;name&quot;:&quot;Microservicio&quot;,&quot;hid&quot;:&quot;microservicio&quot;,&quot;codeblockOffset&quot;:0,&quot;secid&quot;:7,&quot;range&quot;:&quot;7267-&quot;} -->
