@@ -36,7 +36,10 @@ public class UsuarioRESTController {
 	@ResponseBody	
 	public List<Trabajo> getTrabajosDeUnAutor(@PathVariable("id") int id) {
         Usuario autor =  daoUsuario.encontrarPorId(id);
-        return daoUsuario.buscarTrabajoPorAutor(autor);
+        if (autor != null)
+        	return daoUsuario.buscarTrabajoPorAutor(autor);
+        else
+        	throw new RecursoNoEncontrado("id-" + id);
 	}
 	
 }

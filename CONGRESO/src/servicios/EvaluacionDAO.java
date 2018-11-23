@@ -51,19 +51,19 @@ public class EvaluacionDAO implements DAO <Evaluacion, Integer> {
 														+ " WHERE e2.trabajo = ?1 "
 														+ " AND u = e2.evaluador) ";			
 			}
-			else {
+			else {				
 				jpql = "SELECT DISTINCT u FROM Usuario u JOIN u.conocimientos c "
-												+ " WHERE u.empresa NOT IN ( SELECT a.empresa FROM Trabajo t JOIN t.autores a"
-																								+ " WHERE t.id = ?1) "
-				
-										+	" AND NOT EXISTS ( SELECT p FROM Trabajo t JOIN t.palabrasClave p WHERE t.id = ?1 "
-																+ "  AND p.id NOT IN ( SELECT c.id FROM Usuario u2 JOIN u2.conocimientos c"
-																						+ " WHERE u2.id = u.id) )" 
-									+ " AND u.id NOT IN (SELECT e.evaluador FROM Evaluacion e "
-															+ " GROUP BY e.evaluador "
-															+ "HAVING COUNT (e.evaluador) > 2 ) "
-									+ " AND u.id NOT IN (SELECT e2.evaluador FROM Evaluacion e2 "
-															+ " WHERE e2.trabajo = ?1  AND u = e2.evaluador ) ";			
+						+ " WHERE u.empresa NOT IN ( SELECT a.empresa FROM Trabajo t JOIN t.autores a"
+																		+ " WHERE t.id = ?1) "
+
+				+	" AND > ALL ( SELECT p FROM Trabajo t JOIN t.palabrasClave p WHERE t.id = ?1 "
+										+ "  AND p.id NOT IN ( SELECT c.id FROM Usuario u2 JOIN u2.conocimientos c"
+																+ " WHERE u2.id = u.id) )" 
+			+ " AND u.id NOT IN (SELECT e.evaluador FROM Evaluacion e "
+									+ " GROUP BY e.evaluador "
+									+ "HAVING COUNT (e.evaluador) >  2 ) "
+			+ " AND u.id NOT IN (SELECT e2.evaluador FROM Evaluacion e2 "
+									+ " WHERE e2.trabajo = ?1  AND u = e2.evaluador ) ";
 			}
 		
 		 

@@ -20,7 +20,7 @@ public class MicroApiApplicationTests {
 	@Test
 	public void testGetTrabajosDeUnAutor() throws Exception {
 
-		String url = "http://localhost:8080/usuarios/25/trabajos";
+		String url = "http://localhost:8080/usuarios/23/trabajos";
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);

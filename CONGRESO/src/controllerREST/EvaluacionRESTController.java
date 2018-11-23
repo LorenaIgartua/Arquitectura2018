@@ -65,13 +65,17 @@ public class EvaluacionRESTController implements controllerREST <Evaluacion, Int
 	public List<Trabajo> trabajosRevisadosPorEvaluadorEnRangoFechas(@PathParam("id") String msg, 
 			@QueryParam("fromD") String fromDia, @QueryParam("fromM") String fromMes, @QueryParam("fromY") String fromAño,  
 			@QueryParam("toD") String toDia, @QueryParam("toM") String toMes, @QueryParam("toY") String toAño ){
-//			@PathParam("from") LocalDate from, @PathParam("to") LocalDate to) {
+		
+//			@QueryParam("from") String from, @QueryParam("to") String to) {
+		
 		int id = Integer.valueOf(msg);
 		Usuario usuario = UsuarioDAO.getInstance().findById(id);
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		String inicio = fromDia +"-"+fromMes+"-"+fromAño;
-		String fin = toDia +"-"+toMes+"-"+toAño;;
+		String fin = toDia +"-"+toMes+"-"+toAño;
+//		String inicio = from;
+//		String fin = to;
 		LocalDate dateInicio = LocalDate.parse(inicio, formatter);
 		LocalDate dateFin = LocalDate.parse(fin, formatter);
 		
